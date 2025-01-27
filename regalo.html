@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regalo</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <style>
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(100%); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .image {
+            opacity: 0;
+            animation: fadeInUp 2s ease-in-out forwards;
+        }
+        .image:nth-child(1) {
+            animation-delay: 1s;
+        }
+        .image:nth-child(2) {
+            animation-delay: 2s;
+        }
+        #countdown {
+            color: #ffeb3b; /* Bright yellow color */
+        }
+    </style>
+    <script>
+        function updateCountdown() {
+            const targetDate = new Date('May 3, 2025 19:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown').innerHTML = `Faltan ${days} días, ${hours} horas, ${minutes} minutos y ${seconds} segundos`;
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById('countdown').innerHTML = "¡Es el 3 de mayo!";
+            }
+        }
+
+        const countdownInterval = setInterval(updateCountdown, 1000);
+    </script>
+</head>
+<body>
+    <div class="flex flex-col items-center justify-center min-h-screen bg-blue-200 smoth-scroll font-sans p-4 gap-4">
+        <img src="images/portada.jpg" alt="portada" class="w-full sm:w-1/2 h-1/2 object-cover rounded-lg image">
+        <img src="images/asientos.jpg" alt="asientos" class="w-full sm:w-1/2 h-1/2 object-cover rounded-lg image">
+        <p id="countdown" class="text-white text-2xl sm:text-4xl mt-4 text-center"></p>
+    </div>
+</body>
+</html>
